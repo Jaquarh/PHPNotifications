@@ -4,7 +4,7 @@ PHPNotifications is an online platform that allows you to create a network in yo
 # Getting Started
 Download or clone the project and move the content into your application. Require the PHPNotifications file and create a new instance in your factory.
 
-```
+```php
 require_once( dirname( __FILE__ ) . '/PHPNotifications.php' );
 $factory = ( object ) array(
   'PhpNotifier' => ( new PHPNotifications () )->setDebug( true )
@@ -16,7 +16,7 @@ setDebug() method will cast a logger. The logger is used in the Server listener 
 # Creating A Request
 You can create a request using a PHPNotificationPacket retrieved by the getPacket() method. There are 4 types of methods, POST, GET, PUT, DELETE. Each packet has an action argument which the Server listener will use as a sort of packet header.
 
-```
+```php
 $packet = $application->notifier
 						->getPacket ()
 						->setTarget( array( 'Some unique chat tokens' ) )
@@ -34,7 +34,7 @@ $application->notifier
 # Creating A Listener
 You can create a listener using the PHPNotificationListener retrieved by the getListener() method. You can then use the bindAction() method to create a route. Param 1 takes in the action, or the packet header as explained in the creating a request section. The second param takes in the type of request to stop forgery requests. The third param is a closure which takes in all of the arguments that're expected by the request. The final param is optional title for readabilty.
 
-```
+```php
 $listener = $application->notifier->getListener();
 
 $listener->bindAction('message', 'POST', function($from, $message) {
@@ -51,7 +51,7 @@ if($response &&
 # An Example Client Side Listener
 Here, we're sentding a HTTP GET request to the server listener which will keep checking for any incomming packets.
 
-```
+```javascript
 $(function() {
 	setInterval(function() {
 		$.get('/public/notifications').done(function(response) {
