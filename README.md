@@ -7,7 +7,7 @@ Download or clone the project and move the content into your application. Requir
 ```php
 require_once( dirname( __FILE__ ) . '/PHPNotifications.php' );
 $factory = ( object ) array(
-  'PhpNotifier' => ( new PHPNotifications () )->setDebug( true )
+  'PhpNotifier' => ( new PHPNotifications ('Your API Secret') )->setDebug( true )
 );
 ```
 
@@ -50,9 +50,12 @@ $listener->bindAction('message', 'POST', function($from, $message) {
 
 $response = $listener->match($_SESSION['usid']);
 
-if($response &&
-	is_callable($response['method'])) // This will be the users unique session
-		call_user_func_array($response['method'], $response['params']);
+if(is_array($response)) {
+    foreach($response as $actionRoute) {
+        if(is_callable($actionRoute['method']))
+	    call_user_func_array($actionRoute['method'], $actionRoute['params']);
+    }
+}
 ```
 
 # An Example Client Side Listener
