@@ -47,7 +47,7 @@ $response = $listener->match();
 
 if($response &&
 	is_callable($response['method']) &&
-		in_array($respnse['target'], $_SESSION['usid'])) // This will be the users unique session
+		in_array($response['target'], $_SESSION['usid'])) // This will be the users unique session
 			call_user_func_array($response['method'], $response['params']);
 ```
 
