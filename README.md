@@ -17,18 +17,18 @@ setDebug() method will cast a logger. The logger is used in the Server listener 
 You can create a request using a PHPNotificationPacket retrieved by the getPacket() method. There are 4 types of methods, POST, GET, PUT, DELETE. Each packet has an action argument which the Server listener will use as a sort of packet header.
 
 ```php
-$packet = $application->notifier
-						->getPacket ()
-						->setTarget( array( 'Some unique chat tokens' ) )
-						->setMethod( 'POST' )
-						->setArgs( json_encode( array(
-							'action' 	=> 'message',
-							'from'	 	=> 'This users ID',
-							'message' => 'This is an example'
-						) ) );
+$packet = $application	->notifier
+			->getPacket ()
+			->setTarget( array( 'Some unique chat tokens' ) )
+			->setMethod( 'POST' )
+			->setArgs( json_encode( array(
+				'action' 	=> 'message',
+				'from'	 	=> 'This users ID',
+				'message' => 'This is an example'
+			) ) );
 
 $application->notifier
-			->sendPacket( $packet );
+	->sendPacket( $packet );
 ```
 
 # Creating A Listener
