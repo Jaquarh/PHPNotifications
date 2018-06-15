@@ -40,15 +40,19 @@ session_start();
 $listener = $application->notifier->getListener();
 
 $listener->bindAction('message', 'POST', function($from, $message) {
-	// Handle incomming message and return packet
+	// TODO: Handle incomming message and return packet
 }, 'Message Recieved');
 
-$response = $listener->match();
+/**
+ * The match() method will automatically send a response to the server saying that this user session has recieved it.
+ * From there, the user session will be removed from the target.
+ **/
+
+$response = $listener->match($_SESSION['usid']);
 
 if($response &&
-	is_callable($response['method']) &&
-		in_array($response['target'], $_SESSION['usid'])) // This will be the users unique session
-			call_user_func_array($response['method'], $response['params']);
+	is_callable($response['method'])) // This will be the users unique session
+		call_user_func_array($response['method'], $response['params']);
 ```
 
 # An Example Client Side Listener
