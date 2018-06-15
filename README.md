@@ -35,6 +35,8 @@ $application->notifier
 You can create a listener using the PHPNotificationListener retrieved by the getListener() method. You can then use the bindAction() method to create a route. Param 1 takes in the action, or the packet header as explained in the creating a request section. The second param takes in the type of request to stop forgery requests. The third param is a closure which takes in all of the arguments that're expected by the request. The final param is optional title for readabilty.
 
 ```php
+session_start();
+
 $listener = $application->notifier->getListener();
 
 $listener->bindAction('message', 'POST', function($from, $message) {
@@ -44,8 +46,9 @@ $listener->bindAction('message', 'POST', function($from, $message) {
 $response = $listener->match();
 
 if($response &&
-	is_callable($response['target']))
-		call_user_func_array($response['target'], $response['params']);
+	is_callable($response['method']) &&
+		in_array($respnse['target'], $_SESSION['usid'])) // This will be the users unique session
+			call_user_func_array($response['method'], $response['params']);
 ```
 
 # An Example Client Side Listener
